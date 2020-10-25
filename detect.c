@@ -30,6 +30,7 @@ BOOL wsb_detect_proc(VOID)
 
     if (!Process32First(hProcesses, &pe32Entry))
     {
+        CloseHandle(hProcesses);
         return FALSE;
     }
 
@@ -44,7 +45,6 @@ BOOL wsb_detect_proc(VOID)
     while (Process32Next(hProcesses, &pe32Entry));
 
     CloseHandle(hProcesses);
-
     return bFound;
 }
 
@@ -159,6 +159,7 @@ BOOL wsb_detect_cmd(VOID)
             bFound = TRUE;
         }
     }
-
+    
+    RegCloseKey(hKey);
     return bFound;
 }
