@@ -7,7 +7,6 @@ BOOL wsb_detect_username(VOID)
     RtlSecureZeroMemory(wcUser, sizeof(wcUser));
 
     DWORD dwLength = (UNLEN + 1);
-
     if (GetUserNameW(wcUser, &dwLength))
     {
         return (wcscmp(wcUser, SANDBOX_USER) == 0);
@@ -41,7 +40,8 @@ BOOL wsb_detect_proc(VOID)
             bFound = TRUE;
             break;
         }
-    } while (Process32Next(hProcesses, &pe32Entry));
+    } 
+    while (Process32Next(hProcesses, &pe32Entry));
 
     CloseHandle(hProcesses);
 
