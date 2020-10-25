@@ -34,7 +34,7 @@ This method will use `GetAdaptersAddresses`, walk over the list of adapters, and
 Checks if the raw device `\\.\GLOBALROOT\device\vmsmb` can be opened, which is used for communication with the host over SMB.
 
 ### `wsb_detect_cmd`
-On startup, Windows sandbox under the `RunOnce` key in `HKEY_LOCAL_MACHINE` for a command which sets the password never to expire.
+On startup, search under the `RunOnce` key in `HKEY_LOCAL_MACHINE` for a command which sets the password never to expire.
 
 ### `wsb_detect_office`
 Checks for the `OfficePackagesForWDAG` in the current root drive, which seems to be used for Windows Defender Microsoft Office emulation.
