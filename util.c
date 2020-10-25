@@ -13,6 +13,5 @@ BOOL util_path_exists(IN LPCWSTR lpszPath, IN DWORD dwExtraFlags)
 	}
 
 	CloseHandle(hFile);
-
 	return TRUE;
 }
