@@ -1,9 +1,12 @@
 # ⏳ wsb-detect
 wsb-detect enables you to detect if you are running in Windows Sandbox ("WSB"). The sandbox is used by Windows Defender for dynamic analysis, and commonly manually by security analysts and alike. At the tail end of 2019, Microsoft introduced a new feature named Windows Sandbox (WSB for short). The techniques used to fingerprint WSB are outlined below, in the techniques section. Feel free to submit a pull request if you have any fingerprinting ideas 🎉. I've been messing around with it now and then, I will have more on Windows Sandbox coming soon.
 
-If you wish to contact me quicker, feel free to contact me on [Twitter](https://twitter.com/LloydLabs) or [e-mail](mailto:me@syscall.party).
-
 Windows Sandbox allows you to quickly, within 15s, create a disposable Hyper-V based Virtual Machine with all of the qualities a familiar VM would have such as clipboard sharing, mapping directories etc. The sandbox is also the underlay for Microsoft Defender Application Guard (WDAG), for dynamic analysis on Hyper-V enabled hosts and can be enabled on any Windows 10 Pro or Enterprise machine. It's not particularly interesting, but nonetheless could prove useful in implant development. Thank you to my friend [Jonas L](https://twitter.com/jonasLyk) for guidance when I was exploring the sandbox internals (more to come on this).
+
+# Trivia
+If you wish to contact me quicker, feel free to contact me on [Twitter](https://twitter.com/LloydLabs) or [e-mail](mailto:me@syscall.party). Also, it's possible on the host to detect if the sandbox is running, by checking if you can create a mutex named  `WindowsSandboxMutex`.
+
+![mutex check in latest build at 0x140021F1C](https://i.imgur.com/XWupOpm.png)
 
 # Usage
 The `detect.h` header exports all of the functions which can be combined to detect if
