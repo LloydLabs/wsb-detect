@@ -26,6 +26,9 @@ int main(int argc, char** argv)
 ```
 
 # Techniques
+## `wsb_detect_time`
+The image for the sandbox seems to be built on `Saturday, ‎December ‎7, ‎2019, ‏‎9:14:52 AM` - this is around the time Windows Sandbox was released to the public. This check cross references the creation timestamp on the `mountmgr` driver.
+
 ### `wsb_detect_username`
 This method will check if the current username is `WDAGUtilityUserAccount`, the account used by default in the sandbox.
 
