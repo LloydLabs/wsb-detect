@@ -56,20 +56,20 @@ BOOL wsb_detect_suffix(VOID)
     DWORD dwAddrSize = 0;
     if (GetAdaptersAddresses(AF_INET, dwAdapterFlags, NULL, NULL, &dwAddrSize) == 0)
     {
-        return 0;
+        return FALSE;
     }
 
     PIP_ADAPTER_ADDRESSES pAdapterAddrs;
     PIP_ADAPTER_ADDRESSES pAdapt;
     if ((pAdapterAddrs = (PIP_ADAPTER_ADDRESSES)GlobalAlloc(GPTR, dwAddrSize)) == NULL)
     {
-        return 0;
+        return FALSE;
     }
 
     if (GetAdaptersAddresses(AF_INET, dwAdapterFlags, NULL, pAdapterAddrs, &dwAddrSize) != ERROR_SUCCESS)
     {
         GlobalFree(pAdapterAddrs);
-        return 0;
+        return FALSE;
     }
 
     for (pAdapt = pAdapterAddrs; pAdapt; pAdapt = pAdapt->Next)
