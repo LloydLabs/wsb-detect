@@ -41,8 +41,7 @@ BOOL wsb_detect_proc(VOID)
             bFound = TRUE;
             break;
         }
-    } 
-    while (Process32Next(hProcesses, &pe32Entry));
+    } while (Process32Next(hProcesses, &pe32Entry));
 
     CloseHandle(hProcesses);
     return bFound;
@@ -159,7 +158,45 @@ BOOL wsb_detect_cmd(VOID)
             bFound = TRUE;
         }
     }
-    
+
     RegCloseKey(hKey);
     return bFound;
+}
+
+BOOL wsb_detect_time(VOID)
+{
+    BOOL bReturn = FALSE;
+
+    WCHAR wcPath[MAX_PATH + 1];
+    RtlSecureZeroMemory(wcPath, sizeof(wcPath));
+    if (GetSystemDirectory(wcPath, MAX_PATH) == 0)
+    {
+        return bReturn;
+    }
+
+    if (wsprintf(wcPath, SANDBOX_MOUNT_DRIV_FMT, wcPath) == 0)
+    {
+        return bReturn;
+    }
+
+    HANDLE hFile = CreateFile(wcPath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (hFile == INVALID_HANDLE_VALUE)
+    {
+        return bReturn;
+    }
+
+    FILETIME ftCreate;
+    if (GetFileTime(hFile, &ftCreate, NULL, NULL) == 0)
+    {
+        CloseHandle(hFile);
+        return bReturn;
+    }
+
+    if (ftCreate.dwLowDateTime == SANDBOX_TS_LOWER && ftCreate.dwHighDateTime == SANDBOX_TS_HIGHER)
+    {
+        bReturn = TRUE;
+    }
+
+    CloseHandle(hFile);
+    return bReturn;
 }
