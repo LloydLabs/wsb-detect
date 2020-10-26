@@ -149,9 +149,11 @@ BOOL wsb_detect_cmd(VOID)
     WCHAR achValue[MAX_VALUE_NAME];
     RtlSecureZeroMemory(achKey, sizeof(achKey));
     RtlSecureZeroMemory(achValue, sizeof(achValue));
-
+    
     DWORD cchKey = MAX_KEY_LENGTH;
     DWORD cchValue = MAX_VALUE_NAME;
+    
+    // we don't know the exact key, so just get the value at pos 0
     if (RegEnumValue(hKey, 0, achKey, &cchKey, NULL, NULL, (LPBYTE)achValue, &cchValue) == ERROR_SUCCESS)
     {
         if (wcscmp(achValue, SANDBOX_LOGON_CMD) == 0)
