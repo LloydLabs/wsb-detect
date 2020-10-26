@@ -3,11 +3,6 @@ wsb-detect enables you to detect if you are running in Windows Sandbox ("WSB"). 
 
 Windows Sandbox allows you to quickly, within 15s, create a disposable Hyper-V based Virtual Machine with all of the qualities a familiar VM would have such as clipboard sharing, mapping directories etc. The sandbox is also the underlay for Microsoft Defender Application Guard (WDAG), for dynamic analysis on Hyper-V enabled hosts and can be enabled on any Windows 10 Pro or Enterprise machine. It's not particularly interesting, but nonetheless could prove useful in implant development. Thank you to my friend [Jonas L](https://twitter.com/jonasLyk) for guidance when I was exploring the sandbox internals (more to come on this).
 
-# Trivia
-If you wish to contact me quicker, feel free to contact me on [Twitter](https://twitter.com/LloydLabs) or [e-mail](mailto:me@syscall.party). Also, it's possible on the host to detect if the sandbox is running, by checking if you can create a mutex named  `WindowsSandboxMutex`. This limits the sandbox to one virtual-machine per host, however, you can release this mutex by simply duplicating the handle and calling `ReleaseMutex` - viola, you can have multiple instances.
-
-![mutex check in latest build at 0x140021F1C](https://i.imgur.com/XWupOpm.png)
-
 # Usage
 The `detect.h` header exports all of the functions which can be combined to detect if
 
@@ -52,3 +47,8 @@ Checks for `CExecSvc.exe`, which is the container execution service, handling a 
 
 ### `wsb_detect_genuine`
 A more generic method when it comes to sandbox detection, however from tests the Windows doesn't seem to be verified as legitimate in the VMs
+
+# Trivia
+If you wish to contact me quicker, feel free to contact me on [Twitter](https://twitter.com/LloydLabs) or [e-mail](mailto:me@syscall.party). Also, it's possible on the host to detect if the sandbox is running, by checking if you can create a mutex named  `WindowsSandboxMutex`. This limits the sandbox to one virtual-machine per host, however, you can release this mutex by simply duplicating the handle and calling `ReleaseMutex` - viola, you can have multiple instances.
+
+![mutex check in latest build at 0x140021F1C](https://i.imgur.com/XWupOpm.png)
