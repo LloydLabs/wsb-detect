@@ -41,7 +41,8 @@ BOOL wsb_detect_proc(VOID)
             bFound = TRUE;
             break;
         }
-    } while (Process32Next(hProcesses, &pe32Entry));
+    } 
+    while (Process32Next(hProcesses, &pe32Entry));
 
     CloseHandle(hProcesses);
     return bFound;
