@@ -1,6 +1,26 @@
 #include "detect.h"
 #include "util.h"
 
+BOOL wsb_detect_state_dev(VOID)
+{
+    UNICODE_STRING usPath;
+    usPath.Buffer = SANDBOX_STATE_DEV;
+    usPath.Length = sizeof(SANDBOX_STATE_DEV);
+
+    OBJECT_ATTRIBUTES oaDev;
+    InitializeObjectAttributes(&oaDev, &usPath, OBJ_CASE_INSENSITIVE, NULL, NULL);
+
+    HANDLE hDev;
+    if (SUCCEEDED(NtCreateFile(&hDev, MAXIMUM_ALLOWED, &oaDev, NULL, NULL, 0, 0, 0,
+        FILE_OPEN_FOR_BACKUP_INTENT, NULL, 0)))
+    {
+        CloseHandle(hDev);
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
 BOOL wsb_detect_username(VOID)
 {
     WCHAR wcUser[UNLEN + 1];
