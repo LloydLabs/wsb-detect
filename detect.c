@@ -10,7 +10,7 @@ BOOL wsb_detect_state_dev(VOID)
     OBJECT_ATTRIBUTES oaDev;
     InitializeObjectAttributes(&oaDev, &usPath, OBJ_CASE_INSENSITIVE, NULL, NULL);
 
-    HANDLE hDev;
+    HANDLE hDev = INVALID_HANDLE_VALUE;
     if (SUCCEEDED(NtCreateFile(&hDev, MAXIMUM_ALLOWED, &oaDev, NULL, NULL, 0, 0, 0,
         FILE_OPEN_FOR_BACKUP_INTENT, NULL, 0)))
     {
