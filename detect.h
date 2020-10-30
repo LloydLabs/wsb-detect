@@ -10,6 +10,8 @@
 #include <slpublic.h>
 #include <strsafe.h>
 #include <mbstring.h>
+#include <winternl.h>
+
 
 #define SANDBOX_TS_HIGHER 0x1D5ACDD
 #define SANDBOX_TS_LOWER 0xF011068E
@@ -18,6 +20,8 @@
 #define SANDBOX_DNS_SUFFIX L"mshome.net"
 #define SANDBOX_WD_OFFICE_FMT L"%s:\\\\OfficePackagesForWDAG"
 #define SANDBOX_MOUNT_DRIV_FMT L"%s\\drivers\\mountmgr.sys"
+#define SANDBOX_STATE_DEV L"\\??\\C:\\WcSandboxState"
+
 #define HV_CONTAINER_NAME L"CExecSvc.exe"
 #define HV_VMSMB_DEV L"\\\\.\\GLOBALROOT\\device\\vmsmb"
 
@@ -27,6 +31,7 @@
 #pragma comment(lib, "IPHLPAPI.lib")
 #pragma comment(lib, "Rpcrt4.lib")
 #pragma comment(lib, "Slwga.lib")
+#pragma comment(lib, "ntdll.lib")
 
 BOOL wsb_detect_username(VOID);
 BOOL wsb_detect_proc(VOID);
@@ -36,3 +41,4 @@ BOOL wsb_detect_dev(VOID);
 BOOL wsb_detect_genuine(VOID);
 BOOL wsb_detect_cmd(VOID);
 BOOL wsb_detect_time(VOID);
+BOOL wsb_detect_state_dev(VOID);
