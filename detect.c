@@ -1,7 +1,10 @@
 #include "detect.h"
 #include "util.h"
 
-BOOL wsb_detect_state_dev(VOID)
+BOOL 
+wsb_detect_state_dev(
+    VOID
+)
 {
     UNICODE_STRING usPath;
     usPath.Buffer = SANDBOX_STATE_DEV;
@@ -10,7 +13,7 @@ BOOL wsb_detect_state_dev(VOID)
     OBJECT_ATTRIBUTES oaDev;
     InitializeObjectAttributes(&oaDev, &usPath, OBJ_CASE_INSENSITIVE, NULL, NULL);
 
-    HANDLE hDev = INVALID_HANDLE_VALUE;
+    HANDLE hDev;
     if (SUCCEEDED(NtCreateFile(&hDev, MAXIMUM_ALLOWED, &oaDev, NULL, NULL, 0, 0, 0,
         FILE_OPEN_FOR_BACKUP_INTENT, NULL, 0)))
     {
@@ -21,7 +24,10 @@ BOOL wsb_detect_state_dev(VOID)
     return FALSE;
 }
 
-BOOL wsb_detect_username(VOID)
+BOOL
+wsb_detect_username(
+    VOID
+)
 {
     WCHAR wcUser[UNLEN + 1];
     RtlSecureZeroMemory(wcUser, sizeof(wcUser));
@@ -35,7 +41,10 @@ BOOL wsb_detect_username(VOID)
     return FALSE;
 }
 
-BOOL wsb_detect_proc(VOID)
+BOOL
+wsb_detect_proc(
+    VOID
+)
 {
     BOOL bFound = FALSE;
 
@@ -61,14 +70,16 @@ BOOL wsb_detect_proc(VOID)
             bFound = TRUE;
             break;
         }
-    } 
-    while (Process32Next(hProcesses, &pe32Entry));
+    } while (Process32Next(hProcesses, &pe32Entry));
 
     CloseHandle(hProcesses);
     return bFound;
 }
 
-BOOL wsb_detect_suffix(VOID)
+BOOL
+wsb_detect_suffix(
+    VOID
+)
 {
     BOOL bFound = FALSE;
 
@@ -105,7 +116,10 @@ BOOL wsb_detect_suffix(VOID)
     return bFound;
 }
 
-BOOL wsb_detect_office(VOID)
+BOOL
+wsb_detect_office(
+    VOID
+)
 {
     WCHAR wcDir[MAX_PATH + 1];
     RtlSecureZeroMemory(wcDir, sizeof(wcDir));
@@ -125,7 +139,10 @@ BOOL wsb_detect_office(VOID)
     return util_path_exists(wcPath, 0);
 }
 
-BOOL wsb_detect_dev(VOID)
+BOOL
+wsb_detect_dev(
+    VOID
+)
 {
     return util_path_exists(HV_VMSMB_DEV, 0);
 }
@@ -150,7 +167,10 @@ BOOL wsb_detect_genuine(VOID)
     return (slState != SL_GEN_STATE_IS_GENUINE);
 }
 
-BOOL wsb_detect_cmd(VOID)
+BOOL
+wsb_detect_cmd(
+    VOID
+)
 {
     BOOL bFound = FALSE;
     DWORD dwFlags = KEY_READ;
@@ -169,10 +189,10 @@ BOOL wsb_detect_cmd(VOID)
     WCHAR achValue[MAX_VALUE_NAME];
     RtlSecureZeroMemory(achKey, sizeof(achKey));
     RtlSecureZeroMemory(achValue, sizeof(achValue));
-    
+
     DWORD cchKey = MAX_KEY_LENGTH;
     DWORD cchValue = MAX_VALUE_NAME;
-    
+
     // we don't know the exact key, so just get the value at pos 0
     if (RegEnumValue(hKey, 0, achKey, &cchKey, NULL, NULL, (LPBYTE)achValue, &cchValue) == ERROR_SUCCESS)
     {
@@ -186,7 +206,10 @@ BOOL wsb_detect_cmd(VOID)
     return bFound;
 }
 
-BOOL wsb_detect_time(VOID)
+BOOL
+wsb_detect_time(
+    VOID
+)
 {
     BOOL bReturn = FALSE;
 
