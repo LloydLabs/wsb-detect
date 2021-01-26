@@ -35,7 +35,6 @@
 BOOL wsb_detect_username(VOID);
 BOOL wsb_detect_proc(VOID);
 BOOL wsb_detect_suffix(VOID);
-BOOL wsb_detect_office(VOID);
 BOOL wsb_detect_dev(VOID);
 BOOL wsb_detect_genuine(VOID);
 BOOL wsb_detect_cmd(VOID);
