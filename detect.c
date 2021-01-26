@@ -70,7 +70,8 @@ wsb_detect_proc(
             bFound = TRUE;
             break;
         }
-    } while (Process32Next(hProcesses, &pe32Entry));
+    }
+    while (Process32Next(hProcesses, &pe32Entry));
 
     CloseHandle(hProcesses);
     return bFound;
@@ -114,29 +115,6 @@ wsb_detect_suffix(
 
     GlobalFree(pAdapterAddrs);
     return bFound;
-}
-
-BOOL
-wsb_detect_office(
-    VOID
-)
-{
-    WCHAR wcDir[MAX_PATH + 1];
-    RtlSecureZeroMemory(wcDir, sizeof(wcDir));
-
-    if (GetWindowsDirectoryW(wcDir, MAX_PATH) == 0)
-    {
-        return FALSE;
-    }
-
-    WCHAR wcPath[MAX_PATH + 1];
-    RtlSecureZeroMemory(wcPath, sizeof(wcPath));
-    if (StringCbPrintfW(wcPath, sizeof(wcPath), SANDBOX_WD_OFFICE_FMT, wcDir) != S_OK)
-    {
-        return FALSE;
-    }
-
-    return util_path_exists(wcPath, 0);
 }
 
 BOOL
