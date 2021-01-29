@@ -8,7 +8,5 @@ int main(int argc, char** argv)
 	printf("wsb_detect_dev = %d\n", wsb_detect_dev());
 	printf("wsb_detect_genuine = %d\n", wsb_detect_genuine());
 	printf("wsb_detect_cmd = %d\n", wsb_detect_cmd());
-	printf("wsb_detect_office = %d\n", wsb_detect_office());
-
 	return ERROR_SUCCESS;
 }
