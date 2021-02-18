@@ -24,6 +24,9 @@ int main(int argc, char** argv)
 ```
 
 # Techniques
+### `wsb_detect_proc`
+Checks for `CExecSvc.exe`, which is the container execution service, handling a lot of the heavy lifting internally.
+
 ### `wsb_detect_time`
 The image for the sandbox seems to be built on `Saturday, ‎December ‎7, ‎2019, ‏‎9:14:52 AM` - this is around the time Windows Sandbox was released to the public. This check cross references the creation timestamp on the `mountmgr` driver.
 
@@ -38,12 +41,6 @@ Checks if the raw device `\\.\GLOBALROOT\device\vmsmb` can be opened, which is u
 
 ### `wsb_detect_cmd`
 On startup, search under the `RunOnce` key in `HKEY_LOCAL_MACHINE` for a command which sets the password never to expire.
-
-### `wsb_detect_office`
-Checks for the `OfficePackagesForWDAG` in the current root drive, which seems to be used for Windows Defender Microsoft Office emulation.
-
-### `wsb_detect_proc`
-Checks for `CExecSvc.exe`, which is the container execution service, handling a lot of the heavy lifting.
 
 ### `wsb_detect_genuine`
 A more generic method when it comes to sandbox detection, however from tests the Windows doesn't seem to be verified as legitimate in the VMs
