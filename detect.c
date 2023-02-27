@@ -65,7 +65,7 @@ wsb_detect_proc(
 
     do
     {
-        if (wcscmp(pe32Entry.szExeFile, HV_CONTAINER_NAME))
+        if (wcscmp(pe32Entry.szExeFile, HV_CONTAINER_NAME) == 0)
         {
             bFound = TRUE;
             break;
